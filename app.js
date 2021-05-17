@@ -1,10 +1,15 @@
-const http = require('http')
+const { readFile, writeFile } = require('fs').promises
 
-const server = http.createServer((req, res) => {
-    console.log('request event')
-    res.end('Hello World')
-})
+const start = async() => {
+    try {
+        const first = await readFile('./content/first.txt', 'utf8')
+        const second = await readFile('./content/sec.txt', 'utf8')
+        await writeFile('./content/newfile.txt',
+            `This is Awesome: ${first}, ${second}`)
+        console.log(first, second)
+    } catch (error) {
+        console.log(error)
+    }
 
-server.listen(5000, () => {
-    console.log('Server listening on port : 5000....')
-})
+}
+start()
